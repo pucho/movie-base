@@ -1,10 +1,27 @@
+import styled from "styled-components";
+
+const Card = styled.div`
+  background: #b1b1b1;
+  border-radius: 5px;
+  padding: 10px 15px;
+`;
+
+const Title = styled.div`
+  font-weight: 300;
+  font-size: 24px;
+`;
+
+const Description = styled.div`
+  color: white;
+`;
+
 const MovieDetails = () => {
   return (
-    <div className="py-1 px-2 max-w-xl grid grid-rows-2 grid-flow-col gap-2 w-146">
-      <div>Movie Title</div>
-      <div>Movie Desc </div>
-      <div className="row-span-2">* * * * *</div>
-    </div>
+    <Card>
+      <Title>Movie Title</Title>
+      <div>Rating</div>
+      <Description>MovieDescription</Description>
+    </Card>
   );
 };
 

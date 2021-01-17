@@ -1,16 +1,9 @@
-import MovieDetails from "./MovieDetails";
+import styled from "styled-components";
 
-const MovieList = () => {
-  return (
-    <div>
-      <MovieDetails />
-      <MovieDetails />
-      <MovieDetails />
-      <MovieDetails />
-      <MovieDetails />
-      <MovieDetails />
-    </div>
-  );
-};
+const MovieList = styled.div`
+  > div {
+    margin-bottom: 10px;
+  }
+`;
 
 export default MovieList;
