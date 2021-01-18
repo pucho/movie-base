@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Card = styled.div`
   background: #b1b1b1;
+  border: 2px solid #d6d6d6;
   border-radius: 5px;
   padding: 10px 15px;
 `;
@@ -15,12 +16,17 @@ const Description = styled.div`
   color: white;
 `;
 
-const MovieDetails = () => {
+interface MovieDetailsProps {
+  title: string;
+  description: string;
+}
+
+const MovieDetails = ({ title, description }: MovieDetailsProps) => {
   return (
     <Card>
-      <Title>Movie Title</Title>
+      <Title>{title}</Title>
       <div>Rating</div>
-      <Description>MovieDescription</Description>
+      <Description>{description}</Description>
     </Card>
   );
 };
