@@ -14,10 +14,20 @@ const StyledSearch = styled.input`
   width: 100%;
 `;
 
-const SearchInput = () => {
+type SearchInputProps = {
+  onUpdate: Function;
+};
+
+const SearchInput = (props: SearchInputProps) => {
+  const { onUpdate } = props;
   return (
     <Container>
-      <StyledSearch placeholder="Search..."></StyledSearch>
+      <StyledSearch
+        placeholder="Search..."
+        onChange={(e) => {
+          onUpdate(e.target.value);
+        }}
+      ></StyledSearch>
     </Container>
   );
 };
