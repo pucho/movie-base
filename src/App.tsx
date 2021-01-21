@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./App.css";
-import MovieDetails from "./components/MovieDetails";
 import MovieList from "./components/MovieList";
 import NavHeader from "./components/NavHeader";
 import SearchInput from "./components/SearchInput";
