@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import Icon from "./Icon";
+
+import starRegular from "../assets/star-regular.svg";
 
 const Card = styled.div`
   background: #b1b1b1;
@@ -25,7 +28,7 @@ const MovieDetails = ({ title, description }: MovieDetailsProps) => {
   return (
     <Card>
       <Title>{title}</Title>
-      <div>Rating</div>
+      <Icon src={starRegular} alt="rating star icon" />
       <Description>{description}</Description>
     </Card>
   );

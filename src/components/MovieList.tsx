@@ -16,8 +16,11 @@ const StyledMovieList = styled.div`
 //https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&movie?sort_by=popularity.desc
 //
 
+//movie search
+//api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&query=wonder&include_adult=false
+
 interface QueryBuilderProps {
-  queryType: "discover" | "keyword";
+  queryType: "discover" | "search";
   search?: string;
 }
 
@@ -29,12 +32,12 @@ const MovieList = (props: QueryBuilderProps) => {
     search = "",
   }: QueryBuilderProps): string => {
     const baseQuery = `https://api.themoviedb.org/3/${
-      queryType === "discover" ? "discover/movie" : "search/keyword"
+      queryType === "discover" ? "discover/movie" : "search/movie"
     }?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`;
 
     const queryTypes = {
       discover: `&movie?sort_by=popularity.desc`,
-      keyword: `&query=${encodeURIComponent(search)}`,
+      search: `&query=${encodeURIComponent(search)}`,
     };
 
     return `${baseQuery}${queryTypes[queryType]}`;
@@ -67,20 +70,12 @@ const MovieList = (props: QueryBuilderProps) => {
           title,
           overview,
           id,
-          name,
         }: {
           title: string;
           overview: string;
           id: number;
-          name: string;
         }) => {
-          return (
-            <MovieDetails
-              title={title || name}
-              description={overview}
-              key={id}
-            />
-          );
+          return <MovieDetails title={title} description={overview} key={id} />;
         }
       )}
     </StyledMovieList>
