@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useQuery } from "react-query";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimateSharedLayout } from "framer-motion";
 
 import MovieDetails from "./MovieDetails";
@@ -24,6 +24,8 @@ interface QueryBuilderProps {
 
 const MovieList = (props: QueryBuilderProps) => {
   const { queryType, search } = props;
+
+  // const [filter, setFilter] = useState(null);
 
   const queryBuilder = ({
     queryType,
