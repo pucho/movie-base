@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useQuery } from "react-query";
+import React, { useEffect } from "react";
+import { motion, AnimateSharedLayout } from "framer-motion";
+
 import MovieDetails from "./MovieDetails";
-import { useEffect } from "react";
 
 const StyledMovieList = styled.div`
   > div {
@@ -9,15 +11,14 @@ const StyledMovieList = styled.div`
   }
 `;
 
-//text search
-//https://api.themoviedb.org/3/search/keyword?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&query=${encodeURIComponent("wonder")}
-
 //movie discovery
 //https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&movie?sort_by=popularity.desc
 //
+//movie search
+//api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&query=wonder&include_adult=false
 
 interface QueryBuilderProps {
-  queryType: "discover" | "keyword";
+  queryType: "discover" | "search";
   search?: string;
 }
 
@@ -29,12 +30,12 @@ const MovieList = (props: QueryBuilderProps) => {
     search = "",
   }: QueryBuilderProps): string => {
     const baseQuery = `https://api.themoviedb.org/3/${
-      queryType === "discover" ? "discover/movie" : "search/keyword"
+      queryType === "discover" ? "discover/movie" : "search/movie"
     }?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`;
 
     const queryTypes = {
       discover: `&movie?sort_by=popularity.desc`,
-      keyword: `&query=${encodeURIComponent(search)}`,
+      search: `&query=${encodeURIComponent(search)}`,
     };
 
     return `${baseQuery}${queryTypes[queryType]}`;
@@ -61,29 +62,27 @@ const MovieList = (props: QueryBuilderProps) => {
   const { results } = data;
 
   return (
-    <StyledMovieList>
-      {results.map(
-        ({
-          title,
-          overview,
-          id,
-          name,
-        }: {
-          title: string;
-          overview: string;
-          id: number;
-          name: string;
-        }) => {
-          return (
-            <MovieDetails
-              title={title || name}
-              description={overview}
-              key={id}
-            />
-          );
-        }
-      )}
-    </StyledMovieList>
+    <AnimateSharedLayout>
+      <StyledMovieList>
+        <motion.ul layout>
+          {results.map(
+            ({
+              title,
+              overview,
+              id,
+            }: {
+              title: string;
+              overview: string;
+              id: number;
+            }) => {
+              return (
+                <MovieDetails title={title} description={overview} key={id} />
+              );
+            }
+          )}
+        </motion.ul>
+      </StyledMovieList>
+    </AnimateSharedLayout>
   );
 };
 
