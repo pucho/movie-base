@@ -12,11 +12,11 @@ const queryClient = new QueryClient();
 
 function App() {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 200);
+  const debouncedSearch = useDebounce(search, 500);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
         <NavHeader>MovieBase</NavHeader>
         <SearchInput onUpdate={setSearch} />
         <MovieList

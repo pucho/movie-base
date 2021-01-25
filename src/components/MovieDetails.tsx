@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { ReactComponent as ReactStar } from "../assets/star-regular.svg";
 import { ReactComponent as ReactChevron } from "../assets/chevron.svg";
 import { useState } from "react";
 
@@ -10,9 +9,9 @@ const Card = styled.div`
   border: 2px solid #d6d6d6;
   border-radius: 5px;
   margin: 0 auto;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   max-width: 360px;
-  padding: 10px 15px;
+  padding: 10px 15px 20px 15px;
 `;
 
 const Title = styled.div`
@@ -30,10 +29,13 @@ const Description = styled.div`
 interface MovieDetailsProps {
   title: string;
   description: string;
+  poster: string;
 }
 
 //TODO Fix border animation glitch
-const MovieDetails = ({ title, description }: MovieDetailsProps) => {
+//TODO placeholder for movie poster
+//TODO check animation for already present items
+const MovieDetails = ({ title, description, poster }: MovieDetailsProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -41,7 +43,7 @@ const MovieDetails = ({ title, description }: MovieDetailsProps) => {
       <Card>
         <motion.div layout initial={{ borderRadius: 25 }}>
           <Title>
-            {title}
+            <div>{title}</div>
             <ReactChevron
               height={20}
               width={20}
@@ -53,11 +55,6 @@ const MovieDetails = ({ title, description }: MovieDetailsProps) => {
             />
           </Title>
         </motion.div>
-
-        <motion.div layout>
-          <ReactStar color="yellow" height={20} width={20} />
-        </motion.div>
-
         <AnimatePresence>
           {isOpen && (
             <Description>
@@ -66,8 +63,20 @@ const MovieDetails = ({ title, description }: MovieDetailsProps) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  textAlign: "justify",
+                }}
               >
                 {description}
+                <img
+                  src={`https://image.tmdb.org/t/p/w342/${poster}`}
+                  width={342}
+                  height={512}
+                  style={{ marginTop: "10px", alignSelf: "center" }}
+                  alt="Movie poster"
+                />
               </motion.div>
             </Description>
           )}
