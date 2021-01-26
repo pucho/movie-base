@@ -68,7 +68,7 @@ const MovieList = (props: QueryBuilderProps) => {
   const { results } = data;
 
   const ratingRange = (rating: number | null) => {
-    if (typeof rating === null) return [0, 10];
+    if (typeof rating !== "number") return [0, 10];
     switch (true) {
       case rating === 0:
         return [0, 2];
