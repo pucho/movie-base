@@ -62,27 +62,38 @@ const MovieDetails = ({ title, description, poster }: MovieDetailsProps) => {
       </motion.div>
       <AnimatePresence>
         {isOpen && (
-          <Description
-            as={motion.div}
-            layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            exit={{ opacity: 0 }}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "justify",
+          <motion.div
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: "auto" },
+              collapsed: { opacity: 0, height: 0 },
             }}
+            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
-            {description}
-            <PosterImg
-              src={`https://image.tmdb.org/t/p/w342/${poster}`}
-              width={342}
-              height={512}
-              alt="Movie poster"
-            />
-          </Description>
+            <Description
+              as={motion.div}
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "justify",
+              }}
+            >
+              {description}
+              <PosterImg
+                src={`https://image.tmdb.org/t/p/w342/${poster}`}
+                width={342}
+                height={512}
+                alt="Movie poster"
+              />
+            </Description>
+          </motion.div>
         )}
       </AnimatePresence>
     </Card>
