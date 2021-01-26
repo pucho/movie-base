@@ -77,7 +77,7 @@ const MovieDetails = ({ title, description, poster }: MovieDetailsProps) => {
               layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1, ease: [0.8, 0.85, 0.9, 0.98] }}
               exit={{ opacity: 0 }}
               style={{
                 display: "flex",
