@@ -6,18 +6,20 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import MovieDetails from "./MovieDetails";
 import RatingFilter from "./RatingFilter";
 
+const StyledSearchContainer = styled.div`
+  display: flex;
+  margin: 0 auto 15px auto;
+  width: 390px;
+  color: grey;
+`;
+
 const StyledMovieList = styled.div`
   > div {
     margin-bottom: 10px;
   }
 `;
 
-//movie discovery
-//https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&movie?sort_by=popularity.desc
-//
-//movie search
-//api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&query=wonder&include_adult=false
-
+// TODO investigate moving search directly into this component or decouple query from this list
 interface QueryBuilderProps {
   queryType: "discover" | "search";
   search?: string;
@@ -57,6 +59,7 @@ const MovieList = (props: QueryBuilderProps) => {
     refetch();
   }, [search, refetch]);
 
+  //TODO Loading spinner
   if (isLoading) {
     return <h1>loading...</h1>;
   }
@@ -89,10 +92,10 @@ const MovieList = (props: QueryBuilderProps) => {
 
   return (
     <AnimateSharedLayout>
-      <div style={{ display: "flex", margin: "0 auto", width: "390px" }}>
+      <StyledSearchContainer>
         {`Filter by rating: `}
         <RatingFilter ratingIndex={rating} onChange={onRatingChange} />
-      </div>
+      </StyledSearchContainer>
       <StyledMovieList>
         <motion.div layout>
           {results

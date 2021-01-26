@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import "./App.css";
-import MovieList from "./components/MovieList";
-import NavHeader from "./components/NavHeader";
-import SearchInput from "./components/SearchInput";
 
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import useDebounce from "./hooks/useDebounce";
+import styled from "styled-components";
+
+import MovieList from "./components/MovieList";
+import NavHeader from "./components/NavHeader";
+import SearchInput from "./components/SearchInput";
 
 const queryClient = new QueryClient();
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 function App() {
   const [search, setSearch] = useState("");
@@ -16,14 +23,14 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <Container>
         <NavHeader>MovieBase</NavHeader>
         <SearchInput onUpdate={setSearch} />
         <MovieList
           queryType={debouncedSearch ? "search" : "discover"}
           search={debouncedSearch}
         ></MovieList>
-      </div>
+      </Container>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
