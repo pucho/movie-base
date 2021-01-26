@@ -1,10 +1,15 @@
 import { ReactComponent as SolidStar } from "../assets/star-solid.svg";
 import { ReactComponent as OutlineStar } from "../assets/star-regular.svg";
+import styled from "styled-components";
 
 type RatingFilterProps = {
   ratingIndex: number | null;
   onChange?: Function;
 };
+
+const StyledRating = styled.div`
+  padding: 0px 15px;
+`;
 const RatingFilter = ({ ratingIndex, onChange }: RatingFilterProps) => {
   const starRating = () => {
     let items = [];
@@ -39,7 +44,7 @@ const RatingFilter = ({ ratingIndex, onChange }: RatingFilterProps) => {
     return items.map((item) => item);
   };
 
-  return <div style={{ padding: "0px 15px" }}>{starRating()}</div>;
+  return <StyledRating>{starRating()}</StyledRating>;
 };
 
 export default RatingFilter;
