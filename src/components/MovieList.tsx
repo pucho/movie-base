@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useQuery } from "react-query";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimateSharedLayout } from "framer-motion";
 
 import MovieDetails from "./MovieDetails";
+import RatingFilter from "./RatingFilter";
 
 const StyledMovieList = styled.div`
   > div {
@@ -25,6 +26,12 @@ interface QueryBuilderProps {
 const MovieList = (props: QueryBuilderProps) => {
   const { queryType, search } = props;
 
+  const [rating, setRating] = useState<number | null>(null);
+
+  const onRatingChange = (newRating: number) => {
+    rating === newRating ? setRating(null) : setRating(newRating);
+  };
+
   const queryBuilder = ({
     queryType,
     search = "",
@@ -45,7 +52,7 @@ const MovieList = (props: QueryBuilderProps) => {
     fetch(queryBuilder({ queryType, search })).then((res) => res.json())
   );
 
-  //use a debounced search for refetching queries
+  //search is debounced on parent component
   useEffect(() => {
     refetch();
   }, [search, refetch]);
@@ -58,29 +65,65 @@ const MovieList = (props: QueryBuilderProps) => {
     return <h1>Something went wrong...</h1>;
   }
 
-  console.log(data);
   const { results } = data;
+
+  const ratingRange = (rating: number | null) => {
+    if (typeof rating !== "number") return [0, 10];
+    switch (true) {
+      case rating === 0:
+        return [0, 2];
+      case rating === 1:
+        return [2, 4];
+      case rating === 2:
+        return [4, 6];
+      case rating === 3:
+        return [6, 8];
+      case rating === 4:
+        return [8, 10];
+      default:
+        return [0, 10];
+    }
+  };
+
+  const range = ratingRange(rating);
 
   return (
     <AnimateSharedLayout>
+      <div style={{ display: "flex", margin: "0 auto", width: "390px" }}>
+        {`Filter by rating: `}
+        <RatingFilter ratingIndex={rating} onChange={onRatingChange} />
+      </div>
       <StyledMovieList>
-        <motion.ul layout>
-          {results.map(
-            ({
-              title,
-              overview,
-              id,
-            }: {
-              title: string;
-              overview: string;
-              id: number;
-            }) => {
+        <motion.div layout>
+          {results
+            .filter((movie: any) => {
               return (
-                <MovieDetails title={title} description={overview} key={id} />
+                movie.vote_average >= range[0] && movie.vote_average <= range[1]
               );
-            }
-          )}
-        </motion.ul>
+            })
+            .map(
+              ({
+                title,
+                overview,
+                poster_path,
+                id,
+              }: {
+                title: string;
+                overview: string;
+                poster_path: string;
+                id: number;
+              }) => {
+                return (
+                  <MovieDetails
+                    title={title}
+                    description={overview}
+                    key={id}
+                    poster={poster_path}
+                  />
+                );
+              }
+            )}
+        </motion.div>
       </StyledMovieList>
     </AnimateSharedLayout>
   );
