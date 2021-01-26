@@ -54,7 +54,6 @@ const MovieList = (props: QueryBuilderProps) => {
 
   //search is debounced on parent component
   useEffect(() => {
-    console.log("is this a refecth");
     refetch();
   }, [search, refetch]);
 
@@ -68,7 +67,7 @@ const MovieList = (props: QueryBuilderProps) => {
 
   const { results } = data;
 
-  const ratingRange = () => {
+  const ratingRange = (rating: number | null) => {
     if (typeof rating === null) return [0, 10];
     switch (true) {
       case rating === 0:
@@ -86,7 +85,7 @@ const MovieList = (props: QueryBuilderProps) => {
     }
   };
 
-  const range = ratingRange();
+  const range = ratingRange(rating);
 
   return (
     <AnimateSharedLayout>
@@ -98,9 +97,6 @@ const MovieList = (props: QueryBuilderProps) => {
         <motion.div layout>
           {results
             .filter((movie: any) => {
-              console.log(movie.title);
-              console.log(movie.vote_average >= range[0]);
-              console.log(movie.vote_average <= range[1]);
               return (
                 movie.vote_average >= range[0] && movie.vote_average <= range[1]
               );
