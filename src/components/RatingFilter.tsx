@@ -17,7 +17,7 @@ const RatingFilter = ({ ratingIndex, onChange }: RatingFilterProps) => {
       ratingIndex !== null && ratingIndex >= index
         ? items.push(
             <SolidStar
-              color="#ffef00"
+              color="#e07a5f"
               height={20}
               width={20}
               key={`star-${index}`}
@@ -30,7 +30,7 @@ const RatingFilter = ({ ratingIndex, onChange }: RatingFilterProps) => {
           )
         : items.push(
             <OutlineStar
-              color="#ffef00"
+              color="#e07a5f"
               height={20}
               width={20}
               key={`star-${index}`}

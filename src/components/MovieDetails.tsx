@@ -5,10 +5,11 @@ import { ReactComponent as ReactChevron } from "../assets/chevron.svg";
 import { useState } from "react";
 
 const Card = styled.div`
-  background: #b1b1b1;
-  border: 2px solid #9f9f9f;
-  border-radius: 5px;
-  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+  background: #81b29a;
+  border: 2px solid #f4f1de;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px 0px #cecdc2;
+  color: white;
   margin: 0 auto;
   margin-bottom: 5px;
   max-width: 360px;
@@ -38,9 +39,8 @@ interface MovieDetailsProps {
   poster: string;
 }
 
-//TODO Fix border animation glitch
-//TODO placeholder for movie poster
 //TODO check animation for already present items
+//TODO check fade in/out of description/poster
 const MovieDetails = ({ title, description, poster }: MovieDetailsProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,7 +56,7 @@ const MovieDetails = ({ title, description, poster }: MovieDetailsProps) => {
             onClick={(e) => {
               setIsOpen(!isOpen);
             }}
-            color="gray"
+            color="#f4f1de"
           />
         </Title>
       </motion.div>
@@ -70,14 +70,14 @@ const MovieDetails = ({ title, description, poster }: MovieDetailsProps) => {
               open: { opacity: 1, height: "auto" },
               collapsed: { opacity: 0, height: 0 },
             }}
-            transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             <Description
               as={motion.div}
               layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, ease: [0.8, 0.85, 0.9, 0.98] }}
+              transition={{ duration: 1 }}
               exit={{ opacity: 0 }}
               style={{
                 display: "flex",
