@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import "./App.css";
-
 import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import useDebounce from "./hooks/useDebounce";
 import styled from "styled-components";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import MovieList from "./components/MovieList";
 import NavHeader from "./components/NavHeader";

@@ -1,7 +1,8 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "react-query";
-import React, { useEffect, useState } from "react";
 import { motion, AnimateSharedLayout } from "framer-motion";
+import Loader from "react-loader-spinner";
 
 import MovieDetails from "./MovieDetails";
 import RatingFilter from "./RatingFilter";
@@ -18,8 +19,17 @@ const StyledMovieList = styled.div`
     margin-bottom: 10px;
   }
 `;
+//style={{ margin: "0 auto", color: "#3d405b", displa }}
+const StyledLoaderContainer = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  color: #3d405b;
+  margin: 0 auto;
+`;
 
 // TODO investigate moving search directly into this component or decouple query from this list
+//TODO refactor querybuilder as a tool for the whole project
 interface QueryBuilderProps {
   queryType: "discover" | "search";
   search?: string;
@@ -61,11 +71,24 @@ const MovieList = (props: QueryBuilderProps) => {
 
   //TODO Loading spinner
   if (isLoading) {
-    return <h1>loading...</h1>;
+    return (
+      <StyledLoaderContainer>
+        <Loader
+          type="Rings"
+          color="#3d405b"
+          height={100}
+          width={100}
+          timeout={0}
+        />
+        Loading movies
+      </StyledLoaderContainer>
+    );
   }
 
   if (error) {
-    return <h1>Something went wrong...</h1>;
+    return (
+      <StyledLoaderContainer>Something went wrong...</StyledLoaderContainer>
+    );
   }
 
   const { results } = data;
